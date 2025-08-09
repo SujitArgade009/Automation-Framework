@@ -18,11 +18,18 @@ python-dotenv==1.0.0
 # File handling and path utilities
 pathlib2==2.3.7
 
+# Selenium and WebDriver dependencies
+selenium==4.15.2
+webdriver-manager==4.0.1
+pytest==7.4.3
+
+# Security dependencies
+cryptography==41.0.7
+
 # Optional: Video processing (if needed)
 # moviepy==1.0.3
 # Pillow==10.1.0
 
 # Development dependencies (optional)
-# pytest==7.4.3
 # black==23.11.0
 # flake8==6.1.0
