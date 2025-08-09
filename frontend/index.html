@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AI-powered video script generator with voice synthesis and video creation capabilities" />
+  <meta name="keywords" content="AI, video, script, generator, automation, YouTube" />
+  <title>AI Video Pipeline - Create Amazing Content</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+  <!-- Background video with fallback -->
+  <video autoplay muted loop id="bg-video" aria-hidden="true" playsinline>
+    <source src="/static/background.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Processing your request...</p>
+    </div>
+  </div>
+
+  <main>
+    <header>
+      <div class="logo">
+        <span class="logo-icon">🎬</span>
+        <h1>AI Video Pipeline</h1>
+      </div>
+      <p class="subtitle">Create professional scripts, voices, and videos in one place</p>
+    </header>
+
+    <nav class="tab-navigation">
+      <button class="tab-button active" data-tab="script" aria-selected="true">
+        <span class="tab-icon">📝</span>
+        Script Generator
+      </button>
+      <button class="tab-button" data-tab="voice" aria-selected="false">
+        <span class="tab-icon">🎤</span>
+        Voice Generator
+      </button>
+      <button class="tab-button" data-tab="video" aria-selected="false">
+        <span class="tab-icon">🎥</span>
+        Video Creator
+      </button>
+    </nav>
+
+    <!-- Script Generator Tab -->
+    <section id="script-tab" class="tab-content active">
+      <form id="script-form" novalidate>
+        <div class="form-group">
+          <label for="topic">
+            <span class="label-icon">🎯</span>
+            Video Topic
+          </label>
+          <input 
+            type="text" 
+            id="topic" 
+            name="topic" 
+            placeholder="e.g., How to build a React app, Top 10 programming tips, AI in 2024" 
+            required 
+            autocomplete="off"
+            aria-describedby="topic-help"
+          />
+          <small id="topic-help" class="help-text">Be specific for better results</small>
+        </div>
+
+        <div class="form-group">
+          <label for="length">
+            <span class="label-icon">⏱️</span>
+            Script Length
+          </label>
+          <select id="length" name="length" required>
+            <option value="short">Short (2-3 minutes)</option>
+            <option value="medium" selected>Medium (5-7 minutes)</option>
+            <option value="long">Long (10-15 minutes)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="style">
+            <span class="label-icon">🎨</span>
+            Content Style
+          </label>
+          <select id="style" name="style">
+            <option value="educational">Educational</option>
+            <option value="entertaining">Entertaining</option>
+            <option value="professional">Professional</option>
+            <option value="casual">Casual</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-button" aria-label="Generate Script">
+            <span class="button-icon">🚀</span>
+            Generate Script
+          </button>
+          <button type="button" class="secondary-button" id="clear-form" aria-label="Clear Form">
+            <span class="button-icon">🗑️</span>
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <div class="output-section">
+        <div class="output-header">
+          <h3>Generated Script</h3>
+          <div class="output-actions">
+            <button id="copy-script" class="action-button" aria-label="Copy script to clipboard">
+              <span class="button-icon">📋</span>
+              Copy
+            </button>
+            <button id="download-script" class="action-button" aria-label="Download script">
+              <span class="button-icon">💾</span>
+              Download
+            </button>
+          </div>
+        </div>
+        <div id="output" class="output-content" role="region" aria-live="polite" aria-label="Generated script output"></div>
+      </div>
+    </section>
+
+    <!-- Voice Generator Tab -->
+    <section id="voice-tab" class="tab-content">
+      <form id="voice-form" novalidate>
+        <div class="form-group">
+          <label for="voice-text">
+            <span class="label-icon">📄</span>
+            Text to Convert
+          </label>
+          <textarea 
+            id="voice-text" 
+            name="voice-text" 
+            placeholder="Enter the text you want to convert to speech..."
+            rows="6"
+            required
+            aria-describedby="voice-text-help"
+          ></textarea>
+          <small id="voice-text-help" class="help-text">Maximum 5000 characters</small>
+        </div>
+
+        <div class="form-group">
+          <label for="voice-type">
+            <span class="label-icon">🎭</span>
+            Voice Type
+          </label>
+          <select id="voice-type" name="voice-type" required>
+            <option value="male">Male Voice</option>
+            <option value="female">Female Voice</option>
+            <option value="neutral">Neutral Voice</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="voice-speed">
+            <span class="label-icon">⚡</span>
+            Speaking Speed
+          </label>
+          <select id="voice-speed" name="voice-speed">
+            <option value="slow">Slow</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Fast</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-button" aria-label="Generate Voice">
+            <span class="button-icon">🎤</span>
+            Generate Voice
+          </button>
+        </div>
+      </form>
+
+      <div class="output-section">
+        <div class="output-header">
+          <h3>Generated Voice</h3>
+          <div class="output-actions">
+            <button id="play-voice" class="action-button" aria-label="Play generated voice">
+              <span class="button-icon">▶️</span>
+              Play
+            </button>
+            <button id="download-voice" class="action-button" aria-label="Download voice file">
+              <span class="button-icon">💾</span>
+              Download
+            </button>
+          </div>
+        </div>
+        <div id="voice-output" class="output-content" role="region" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Video Creator Tab -->
+    <section id="video-tab" class="tab-content">
+      <form id="video-form" novalidate>
+        <div class="form-group">
+          <label for="video-script">
+            <span class="label-icon">📝</span>
+            Script File
+          </label>
+          <input 
+            type="file" 
+            id="video-script" 
+            name="video-script" 
+            accept=".txt,.md"
+            required
+            aria-describedby="video-script-help"
+          />
+          <small id="video-script-help" class="help-text">Upload your script file (TXT or MD)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="video-style">
+            <span class="label-icon">🎨</span>
+            Video Style
+          </label>
+          <select id="video-style" name="video-style" required>
+            <option value="modern">Modern</option>
+            <option value="minimal">Minimal</option>
+            <option value="dynamic">Dynamic</option>
+            <option value="elegant">Elegant</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="video-resolution">
+            <span class="label-icon">📐</span>
+            Resolution
+          </label>
+          <select id="video-resolution" name="video-resolution" required>
+            <option value="1080p" selected>1080p (Full HD)</option>
+            <option value="720p">720p (HD)</option>
+            <option value="4k">4K (Ultra HD)</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-button" aria-label="Create Video">
+            <span class="button-icon">🎬</span>
+            Create Video
+          </button>
+        </div>
+      </form>
+
+      <div class="output-section">
+        <div class="output-header">
+          <h3>Generated Video</h3>
+          <div class="output-actions">
+            <button id="preview-video" class="action-button" aria-label="Preview video">
+              <span class="button-icon">👁️</span>
+              Preview
+            </button>
+            <button id="download-video" class="action-button" aria-label="Download video">
+              <span class="button-icon">💾</span>
+              Download
+            </button>
+          </div>
+        </div>
+        <div id="video-output" class="output-content" role="region" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast notifications -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+OPENAI_API_KEY = "your_openai_api_key"
+ELEVENLABS_API_KEY = "your_elevenlabs_api_key"
+YOUTUBE_CLIENT_SECRET = "client_secret.json"  # From Google Cloud
